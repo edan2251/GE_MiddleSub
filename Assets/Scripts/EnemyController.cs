@@ -9,20 +9,25 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isMovingRight = true;
 
-
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
+    
+    
     void Update()
     {
-        if(isMovingRight)
+        if (isMovingRight)
+        {
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
         else
+        {
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

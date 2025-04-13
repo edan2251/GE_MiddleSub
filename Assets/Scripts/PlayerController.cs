@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator pAni;
     private bool isGrounded;
+    
 
     private bool isGiant = false;
 
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         pAni = GetComponent<Animator>();
+
+    
     }
 
 
@@ -31,22 +34,22 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2 (moveInput * moveSpeed, rb.velocity.y);
 
 
-        if (isGiant)
+        if (moveInput > 0)
         {
-            if (moveInput < 0)
-                transform.localScale = new Vector3(2f, 2f, 1f);
-            if (moveInput > 0)
-                transform.localScale = new Vector3(-2f, 2f, 1f);
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            pAni.SetBool("Run", true);
+        }
+        else if (moveInput < 0)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            pAni.SetBool("Run", true);
         }
         else
         {
-            if (moveInput < 0)
-                transform.localScale = new Vector3(1f, 1f, 1f);
-
-            if (moveInput > 0)
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+            pAni.SetBool("Run", false); // 정지 상태일 때 애니메이션 멈춤
         }
-        
+
+
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
