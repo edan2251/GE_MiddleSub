@@ -10,6 +10,8 @@ public class EnemyTraceController : MonoBehaviour
 
     private Transform player;
 
+    
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -17,6 +19,8 @@ public class EnemyTraceController : MonoBehaviour
 
     void Update()
     {
+        
+
         Vector2 direction = player.position - transform.position;
 
         if (direction.magnitude > traceDistance)
@@ -38,6 +42,15 @@ public class EnemyTraceController : MonoBehaviour
             {
                 transform.Translate(direction * moveSpeed * Time.deltaTime);
             }
+        }
+
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
 }
