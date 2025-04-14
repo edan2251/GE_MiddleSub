@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Obstacle
   - Item
+  - Item_Run
   layers:
   - Default
   - TransparentFX

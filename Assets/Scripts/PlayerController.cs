@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     //아이템
     private bool Strong = false;
+    public bool isInvincible = false; // 무적 상태 플래그
 
     private void Awake()
     {
@@ -77,7 +78,10 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Respawn"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (!isInvincible) // 무적이 아니라면 함정 적용
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
         }
 
         if (collision.CompareTag("Finish"))
@@ -105,6 +109,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator ActivateStrongEffect()
     {
         Strong = true;
+        isInvincible = true;
         float elapsedTime = 0f;
 
         while (elapsedTime < effectDuration)
@@ -123,6 +128,7 @@ public class PlayerController : MonoBehaviour
 
         spriteRenderer.color = Color.white; // 원래 색으로 복귀
         Strong = false;
+        isInvincible = false;
     }
 
 
