@@ -225,12 +225,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe112db26bd3c648936679ee1b46891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  effectDuration: 10
+  colorChangeSpeed: 0.01
   moveSpeed: 2.5
   jumpForce: 2.5
   groundCheck: {fileID: 8016278158590540537}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  isInvincible: 0
+  playerMoveSpeed: 0
+  speedBoostDuration: 7
+  isSpeedBoosted: 0
+  playerJumpHigh: 0
+  jumpBoostDuration: 7
+  isJumpBoosted: 0
+  afterImagePrefab: {fileID: 0}
+  maxAfterImages: 5
+  spawnInterval: 0.08
+  fadeSpeed: 2
 --- !u!61 &2865463381426443186
 BoxCollider2D:
   m_ObjectHideFlags: 0

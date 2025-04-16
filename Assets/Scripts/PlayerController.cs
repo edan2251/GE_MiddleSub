@@ -50,12 +50,7 @@ public class PlayerController : MonoBehaviour
         pAni = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        
-
-
     }
-
 
     private void Update()
     {
