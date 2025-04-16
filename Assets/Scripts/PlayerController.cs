@@ -35,6 +35,14 @@ public class PlayerController : MonoBehaviour
     public float jumpBoostDuration = 7f; // 속도 증가 지속 시간
     public bool isJumpBoosted = false; // 속도 증가 여부
 
+    //잔상관련
+    public GameObject afterImagePrefab; // 잔상 프리팹
+    public int maxAfterImages = 5; // 잔상의 최대 개수
+    public float spawnInterval = 0.08f; // 잔상 생성 간격
+    public float fadeSpeed = 2.0f; // 투명도 감소 속도
+
+    private float spawnTimer;
+
 
     private void Awake()
     {
@@ -81,12 +89,74 @@ public class PlayerController : MonoBehaviour
         }
 
 
-
-
+        // 이동 속도가 일정 이상일 때만 실행
+        if (isSpeedBoosted)
+        {
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnInterval)
+            {
+                SpawnAfterImage();
+                spawnTimer = 0;
+            }
+        }
 
 
 
     }//.Update
+
+    //잔상 관련
+    void SpawnAfterImage()
+    {
+        GameObject afterImage = Instantiate(afterImagePrefab, transform.position, transform.rotation);
+        afterImage.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
+
+        // 이동 방향에 따라 잔상 좌우 반전
+        Vector3 scale = afterImage.transform.localScale;
+
+        if (isMovingRight()) // 오른쪽 이동 중
+        {
+            scale.x = Mathf.Abs(scale.x); // X 스케일을 양수로 설정
+        }
+        else if (isMovingLeft()) // 왼쪽 이동 중
+        {
+            scale.x = -Mathf.Abs(scale.x); // X 스케일을 음수로 설정 (좌우 반전)
+        }
+
+        afterImage.transform.localScale = scale;
+
+        // 투명도 설정
+        StartCoroutine(FadeOut(afterImage));
+    }
+
+
+    // 이동 방향 확인 함수
+    bool isMovingRight()
+    {
+        return GetComponent<Rigidbody2D>().velocity.x > 0.1f; // 오른쪽 이동 중
+    }
+
+    bool isMovingLeft()
+    {
+        return GetComponent<Rigidbody2D>().velocity.x < -0.1f; // 왼쪽 이동 중
+    }
+
+    //잔상관련2
+    System.Collections.IEnumerator FadeOut(GameObject obj)
+    {
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        Color color = sr.color;
+
+        // 잔상이 점점 투명해지도록 처리
+        while (color.a > 0)
+        {
+            color.a -= Time.deltaTime * fadeSpeed;
+            sr.color = color;
+            yield return null;
+        }
+
+        Destroy(obj); // 잔상 제거
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -110,16 +180,19 @@ public class PlayerController : MonoBehaviour
             else
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
         if (collision.CompareTag("Item_Mujuck"))
         {
             StartCoroutine(ActivateStrongEffect());
             Destroy(collision.gameObject);
         }
+
         if (collision.CompareTag("Item_Run"))
         {
             StartCoroutine(ActivateSpeedBoost());
             Destroy(collision.gameObject);
         }
+
         if (collision.CompareTag("Item_Jump"))
         {
             StartCoroutine(ActivateJumpBoost());

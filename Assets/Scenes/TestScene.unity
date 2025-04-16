@@ -4172,6 +4172,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 210632416}
     - target: {fileID: 5726117920753771576, guid: ff86454cd6fa4fe438910302afe8393f, type: 3}
+      propertyPath: afterImagePrefab
+      value: 
+      objectReference: {fileID: 6176832750359516664, guid: 8fa2f813fc3ea204abe3337fe0f9463c, type: 3}
+    - target: {fileID: 5726117920753771576, guid: ff86454cd6fa4fe438910302afe8393f, type: 3}
       propertyPath: speedBoostDuration
       value: 7
       objectReference: {fileID: 0}
