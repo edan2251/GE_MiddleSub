@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Missile : MonoBehaviour
 {
@@ -8,8 +10,11 @@ public class Missile : MonoBehaviour
     public GameObject missilePrefab;
 
     // 미사일이 발사되는 순간의 속도
-    public float launchSpeed = 10.0f;
-    // Start is called before the first frame update
+    public float launchSpeed = 15.0f;
+
+    private float fireCooldown = 0.7f; // 쿨다운 시간
+    private float lastFireTime = -Mathf.Infinity; // 마지막 발사 시간 초기화
+    
     void Start()
     {
         
@@ -18,9 +23,12 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // V 눌렀을때 발사 슛
-        if (Input.GetKeyDown(KeyCode.V))
+        // Z 눌렀을때 발사 슛
+        if (Input.GetKeyDown(KeyCode.Z) && Time.time >= lastFireTime + fireCooldown)
         {
+            // 발사 시점 갱신
+            lastFireTime = Time.time;
+
             // 프리팹으로부터 새로운 미사일 게임 오브젝트 생성
             GameObject missile = Instantiate(missilePrefab, transform.position, transform.rotation);
 
@@ -38,4 +46,6 @@ public class Missile : MonoBehaviour
 
         
     }
+
+    
 }

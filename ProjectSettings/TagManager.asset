@@ -10,6 +10,8 @@ TagManager:
   - Item_Run
   - Item_Mujuck
   - Item_Jump
+  - Missile
+  - Boss
   layers:
   - Default
   - TransparentFX
