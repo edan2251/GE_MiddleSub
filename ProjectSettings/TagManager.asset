@@ -7,8 +7,9 @@ TagManager:
   - Boundary
   - Enemy
   - Obstacle
-  - Item
   - Item_Run
+  - Item_Mujuck
+  - Item_Jump
   layers:
   - Default
   - TransparentFX

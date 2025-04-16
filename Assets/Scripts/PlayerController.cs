@@ -25,12 +25,26 @@ public class PlayerController : MonoBehaviour
     private bool Strong = false;
     public bool isInvincible = false; // 무적 상태 플래그
 
+    // 이동 속도 관련
+    public float playerMoveSpeed;
+    public float speedBoostDuration = 7f; // 속도 증가 지속 시간
+    public bool isSpeedBoosted = false; // 속도 증가 여부
+
+    // 점프 증가 관련
+    public float playerJumpHigh;
+    public float jumpBoostDuration = 7f; // 속도 증가 지속 시간
+    public bool isJumpBoosted = false; // 속도 증가 여부
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         pAni = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        
+
 
     }
 
@@ -96,16 +110,26 @@ public class PlayerController : MonoBehaviour
             else
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        if (collision.CompareTag("Item"))
+        if (collision.CompareTag("Item_Mujuck"))
         {
             StartCoroutine(ActivateStrongEffect());
+            Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("Item_Run"))
+        {
+            StartCoroutine(ActivateSpeedBoost());
+            Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("Item_Jump"))
+        {
+            StartCoroutine(ActivateJumpBoost());
             Destroy(collision.gameObject);
         }
 
     }
 
 
-
+    //무적 상태 기능
     IEnumerator ActivateStrongEffect()
     {
         Strong = true;
@@ -130,7 +154,43 @@ public class PlayerController : MonoBehaviour
         Strong = false;
         isInvincible = false;
     }
+    
+    // 속도 증가 기능
+    IEnumerator ActivateSpeedBoost()
+    {
+        playerMoveSpeed = moveSpeed; // 기본 이동 속도
+        float originalSpeed = playerMoveSpeed; // 기존 속도 저장
+        moveSpeed *= 2f; // 속도 증가
+        isSpeedBoosted = true; // 속도 증가 상태 표시
 
+        float SpeedStartTime = 0f;
+        while (SpeedStartTime < speedBoostDuration)
+        {
+            SpeedStartTime += Time.deltaTime;
+            yield return null;
+        }
 
+        moveSpeed = originalSpeed; // 원래 속도로 복귀
+        isSpeedBoosted = false; // 속도 증가 종료
+    }
+
+    // 점프 관련 기능
+    IEnumerator ActivateJumpBoost()
+    {
+        playerJumpHigh = jumpForce; // 기본 점프
+        float originalJump = playerJumpHigh; // 기존 점프 저장
+        jumpForce *= 2f; // 점프증가
+        isJumpBoosted = true; // 점프 증가 상태 표시
+
+        float JumpBoostStartTime = 0f;
+        while (JumpBoostStartTime < jumpBoostDuration)
+        {
+            JumpBoostStartTime += Time.deltaTime;
+            yield return null;
+        }
+
+        jumpForce = originalJump; // 원래 점프로 복귀
+        isJumpBoosted = false; // 점프 증가 종료
+    }
 
 }
