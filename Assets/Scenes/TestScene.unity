@@ -6552,7 +6552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4bab2f4f2a788a45a8c3aa23ef8f19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.1
+  moveSpeed: 1
   raycastDistance: 0.2
   traceDistance: 7
 --- !u!1 &621834810
@@ -7218,7 +7218,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: bb00b475528473843818ca8765dea375, type: 2}
     - target: {fileID: 2551189120810295189, guid: ff86454cd6fa4fe438910302afe8393f, type: 3}
       propertyPath: orthographic size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2865463381426443186, guid: ff86454cd6fa4fe438910302afe8393f, type: 3}
       propertyPath: m_Size.y
@@ -7262,7 +7262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8959537919933696669, guid: ff86454cd6fa4fe438910302afe8393f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.79
+      value: -1.26
       objectReference: {fileID: 0}
     - target: {fileID: 8959537919933696669, guid: ff86454cd6fa4fe438910302afe8393f, type: 3}
       propertyPath: m_LocalPosition.z
