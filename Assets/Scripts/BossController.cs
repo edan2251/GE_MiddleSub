@@ -5,12 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour
 {
+    public BossTraceController bossTraceController;
+
     public int Health = 100;
     public int Damage = 10;
+
+    private Animator bAni;
+    public bool isHitAnimation = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        bAni = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -19,21 +25,46 @@ public class BossController : MonoBehaviour
         
     }
 
-    
+    //isMoving
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Missile"))
+        if (bossTraceController.isMoving == false)
         {
-            Health -= Damage;
-            Destroy(collision.gameObject);
-
-            if (Health <= 0)
+            if (collision.CompareTag("Missile"))
             {
-                Destroy(gameObject);
+                Destroy(collision.gameObject);
+                Health -= Damage;
+
+                if (isHitAnimation == false)
+                {
+                    StartCoroutine(PlayHitAction());
+                }
+
+                if (Health <= 0)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
-            
+        /*if (bossTraceController.isMoving == true)
+        {
+            Destroy(collision.gameObject);
+        }*/
+
+
     }
+    private IEnumerator PlayHitAction()
+    {
+        isHitAnimation = true;
+        bAni.SetBool("isHit", true);
+
+        // 애니메이션 길이만큼 기다림
+        yield return new WaitForSeconds(0.4f);
+
+        bAni.SetBool("isHit", false);
+        isHitAnimation = false;
+    }
+
 
 
 }

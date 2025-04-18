@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator pAni;
 
-    //아이템
+    [Header("아이템")]
     private bool Strong = false;
     public bool isInvincible = false; // 무적 상태 플래그
 
@@ -166,6 +166,11 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Finish"))
         {
             collision.GetComponent<LevelObject>().MoveToNextLevel();
+        }
+
+        if (collision.CompareTag("Boss"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         if (collision.CompareTag("Enemy"))

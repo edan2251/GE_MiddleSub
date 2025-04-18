@@ -13,13 +13,12 @@ public class BossTraceController : MonoBehaviour
 
     private float moveTime = 3.0f;
     private float waitTime = 4.0f;
-    private bool isMoving = false;
+    public bool isMoving = false;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
-        //SetRandomTimes();
     }
 
     void Update()
@@ -35,7 +34,6 @@ public class BossTraceController : MonoBehaviour
             {
                 
                 animator.SetTrigger("Boss_Idle"); // Idle 애니메이션 출력
-                //SetRandomTimes();
                 waitTime = 4.0f;
                 isMoving = false;
 
@@ -48,7 +46,6 @@ public class BossTraceController : MonoBehaviour
 
             if (waitTime <= 0)
             {
-                
                 animator.SetTrigger("Boss_Run"); // Run 애니메이션 출력
                 moveTime = 3.0f;
                 isMoving = true;
@@ -95,8 +92,5 @@ public class BossTraceController : MonoBehaviour
         }
     }
 
-    private void SetRandomTimes()
-    {
-        //waitTime = Random.Range(3f, 5f); // 3 5초 동안 멈춤
-    }
+    
 }
