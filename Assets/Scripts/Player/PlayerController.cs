@@ -14,33 +14,34 @@ public class PlayerController : MonoBehaviour
 
     //아이템 지속시간, 색깔 변경시간
     public SpriteRenderer spriteRenderer;
-    public float effectDuration = 10f;
+    public float effectDuration = 7f;
     public float colorChangeSpeed = 0.01f;
 
-    //점프, 이동 관련
-    private float baseMoveSpeed = 2.5f;
-    public float moveSpeed = 2.5f;
-    private float baseJumpForce = 2.5f;
-    public float jumpForce = 2.5f;
+    //점프
     public Transform groundCheck;
     public LayerMask groundLayer;
     private bool isGrounded;
+
+    public float playerMoveSpeed;
+    public float playerJumpHigh;
 
     //애니메이션
     private Rigidbody2D rb;
     private Animator pAni;
 
-    [Header("아이템")]
+    //아이템 상태
     private bool Strong = false;
     public bool isInvincible = false; // 무적 상태 플래그
 
     // 이동 속도 관련
-    public float playerMoveSpeed;
+    private float baseMoveSpeed = 2.5f;
+    public float moveSpeed = 2.5f;
     public float speedBoostDuration = 7f; // 속도 증가 지속 시간
     public bool isSpeedBoosted = false; // 속도 증가 여부
 
     // 점프 증가 관련
-    public float playerJumpHigh;
+    private float baseJumpForce = 2.5f;
+    public float jumpForce = 2.5f;
     public float jumpBoostDuration = 7f; // 속도 증가 지속 시간
     public bool isJumpBoosted = false; // 속도 증가 여부
 
@@ -230,7 +231,7 @@ public class PlayerController : MonoBehaviour
             Strong = true;
             isInvincible = true;
 
-            float intensity = Mathf.Sin(Time.time * 10f) * 0.5f + 0.5f; // 밝기 변화 추가
+            float intensity = Mathf.Sin(Time.time * 7f) * 0.5f + 0.5f; // 밝기 변화 추가
 
             spriteRenderer.color = new Color(
                 Mathf.Sin(Time.time * 15f) * 0.8f + 0.5f,
