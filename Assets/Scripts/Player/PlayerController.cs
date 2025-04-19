@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    //참조들
+    public BossTraceController bossTraceController;
+    private Item_StrawBerry_Collected_Effect item_StrawBerry_Collected_Effect;
+    private Item_Cherry_Collected_Effect item_Cherry_Collected_Effect;
+    private Item_Banana_Collected_Effect item_Banana_Collected_Effect;
+
     //아이템 지속시간, 색깔 변경시간
     public SpriteRenderer spriteRenderer;
     public float effectDuration = 10f;
     public float colorChangeSpeed = 0.01f;
 
     //점프, 이동 관련
-    public float moveSpeed = 5f;
-    public float jumpForce = 5;
+    private float baseMoveSpeed = 2.5f;
+    public float moveSpeed = 2.5f;
+    private float baseJumpForce = 2.5f;
+    public float jumpForce = 2.5f;
     public Transform groundCheck;
     public LayerMask groundLayer;
     private bool isGrounded;
@@ -170,7 +179,12 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Boss"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (Strong)
+            {
+                bossTraceController.BossStopAnimation();
+            }
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         if (collision.CompareTag("Enemy"))
@@ -183,20 +197,23 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Item_Mujuck"))
         {
+            item_Banana_Collected_Effect = collision.GetComponent<Item_Banana_Collected_Effect>();
             StartCoroutine(ActivateStrongEffect());
-            Destroy(collision.gameObject);
+            item_Banana_Collected_Effect.PlayAndDestroy();
         }
 
         if (collision.CompareTag("Item_Run"))
         {
+            item_StrawBerry_Collected_Effect = collision.GetComponent<Item_StrawBerry_Collected_Effect>();
             StartCoroutine(ActivateSpeedBoost());
-            Destroy(collision.gameObject);
+            item_StrawBerry_Collected_Effect.PlayAndDestroy();
         }
 
         if (collision.CompareTag("Item_Jump"))
         {
+            item_Cherry_Collected_Effect = collision.GetComponent<Item_Cherry_Collected_Effect>();
             StartCoroutine(ActivateJumpBoost());
-            Destroy(collision.gameObject);
+            item_Cherry_Collected_Effect.PlayAndDestroy();
         }
 
     }
@@ -205,12 +222,14 @@ public class PlayerController : MonoBehaviour
     //무적 상태 기능
     IEnumerator ActivateStrongEffect()
     {
-        Strong = true;
-        isInvincible = true;
         float elapsedTime = 0f;
+        
 
         while (elapsedTime < effectDuration)
         {
+            Strong = true;
+            isInvincible = true;
+
             float intensity = Mathf.Sin(Time.time * 10f) * 0.5f + 0.5f; // 밝기 변화 추가
 
             spriteRenderer.color = new Color(
@@ -221,9 +240,11 @@ public class PlayerController : MonoBehaviour
 
             elapsedTime += Time.deltaTime;
             yield return null;
+            
         }
 
         spriteRenderer.color = Color.white; // 원래 색으로 복귀
+        //잠깐 false 일때 버그 생길수도
         Strong = false;
         isInvincible = false;
     }
@@ -231,38 +252,34 @@ public class PlayerController : MonoBehaviour
     // 속도 증가 기능
     IEnumerator ActivateSpeedBoost()
     {
-        playerMoveSpeed = moveSpeed; // 기본 이동 속도
-        float originalSpeed = playerMoveSpeed; // 기존 속도 저장
-        moveSpeed *= 2f; // 속도 증가
-        isSpeedBoosted = true; // 속도 증가 상태 표시
-
         float SpeedStartTime = 0f;
+
         while (SpeedStartTime < speedBoostDuration)
         {
+            moveSpeed = baseMoveSpeed * 2f; // 속도 증가
+            isSpeedBoosted = true; // 속도 증가 상태 표시
             SpeedStartTime += Time.deltaTime;
             yield return null;
         }
 
-        moveSpeed = originalSpeed; // 원래 속도로 복귀
+        moveSpeed = baseMoveSpeed; // 원래 속도로 복귀
         isSpeedBoosted = false; // 속도 증가 종료
     }
 
     // 점프 관련 기능
     IEnumerator ActivateJumpBoost()
     {
-        playerJumpHigh = jumpForce; // 기본 점프
-        float originalJump = playerJumpHigh; // 기존 점프 저장
-        jumpForce *= 2f; // 점프증가
-        isJumpBoosted = true; // 점프 증가 상태 표시
-
         float JumpBoostStartTime = 0f;
+
         while (JumpBoostStartTime < jumpBoostDuration)
         {
+            jumpForce = baseJumpForce * 2f; // 점프증가
+            isJumpBoosted = true; // 점프 증가 상태 표시
             JumpBoostStartTime += Time.deltaTime;
             yield return null;
         }
 
-        jumpForce = originalJump; // 원래 점프로 복귀
+        jumpForce = baseJumpForce; // 원래 점프로 복귀
         isJumpBoosted = false; // 점프 증가 종료
     }
 

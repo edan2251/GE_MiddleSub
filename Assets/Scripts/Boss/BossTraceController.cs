@@ -11,8 +11,8 @@ public class BossTraceController : MonoBehaviour
     private Transform player;
     private Animator animator;
 
-    private float moveTime = 3.0f;
-    private float waitTime = 4.0f;
+    public float moveTime = 3.0f;
+    public float waitTime = 4.0f;
     public bool isMoving = false;
 
     void Start()
@@ -54,6 +54,12 @@ public class BossTraceController : MonoBehaviour
         }
     }
 
+    //보스 플레이어랑 맞았을때 애니메이션
+    public void BossStopAnimation()
+    {
+        moveTime = 0f;
+        animator.SetTrigger("isHit_Wall");
+    }
 
     //Trace이동
     private void PerformMovement()

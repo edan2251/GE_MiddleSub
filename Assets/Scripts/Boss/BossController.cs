@@ -46,10 +46,10 @@ public class BossController : MonoBehaviour
                 }
             }
         }
-        /*if (bossTraceController.isMoving == true)
+        if (bossTraceController.isMoving == true && collision.CompareTag("Missile"))
         {
             Destroy(collision.gameObject);
-        }*/
+        }
 
 
     }

@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 2865463381426443186}
   - component: {fileID: 278498083680940015}
   - component: {fileID: 1364947559755974909}
+  - component: {fileID: 4019061623916699677}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -202,7 +203,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
+  m_Sprite: {fileID: -6367560908665664636, guid: 40de9a8703e2e5a47882b0b86451c741, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -225,6 +226,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe112db26bd3c648936679ee1b46891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item_StrawBerry_Collected_Effect: {fileID: 0}
+  item_Cherry_Collected_Effect: {fileID: 0}
+  item_Banana_Collected_Effect: {fileID: 0}
   spriteRenderer: {fileID: 0}
   effectDuration: 10
   colorChangeSpeed: 0.01
@@ -241,7 +245,7 @@ MonoBehaviour:
   playerJumpHigh: 0
   jumpBoostDuration: 7
   isJumpBoosted: 0
-  afterImagePrefab: {fileID: 0}
+  afterImagePrefab: {fileID: 6176832750359516664, guid: 8fa2f813fc3ea204abe3337fe0f9463c, type: 3}
   maxAfterImages: 5
   spawnInterval: 0.08
   fadeSpeed: 2
@@ -288,7 +292,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.23, y: 0.27}
+  m_Size: {x: 0.23, y: 0.26}
   m_EdgeRadius: 0
 --- !u!50 &278498083680940015
 Rigidbody2D:
@@ -327,7 +331,7 @@ Animator:
   m_GameObject: {fileID: 3978649455129186778}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ac916cc0b14a1ee4c92406d7aa744b35, type: 2}
+  m_Controller: {fileID: 9100000, guid: bb00b475528473843818ca8765dea375, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -338,3 +342,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4019061623916699677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3978649455129186778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee5513d8a9e2d04aba18a34e0880c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 1791177681783271257, guid: 4e2b17231e23a614f8627b835e51942b, type: 3}
+  launchSpeed: 3
