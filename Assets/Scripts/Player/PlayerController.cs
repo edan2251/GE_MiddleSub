@@ -9,7 +9,12 @@ public class PlayerController : MonoBehaviour
     public GameObject gamePauseUI;
     private bool isPaused = false;
 
+    [SerializeField] private AudioSource sfxSource;         // 효과음 재생용 AudioSource
+    [SerializeField] private AudioClip jumpBoostSFX;        // 점프 강화 효과음
+    [SerializeField] private AudioClip stopSFX;
+
     //참조들
+    [SerializeField] private BGMController bgmController;
     public BossTraceController bossTraceController;
     private Item_StrawBerry_Collected_Effect item_StrawBerry_Collected_Effect;
     private Item_Cherry_Collected_Effect item_Cherry_Collected_Effect;
@@ -85,6 +90,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Strong)
+        {
+            bgmController.SwitchToInvincibleBGM();
+        }
+        else if (isSpeedBoosted)
+        {
+            bgmController.SwitchToSpeedBoostBGM();
+        }
+        else
+        {
+            bgmController.SwitchToNormalBGM();
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!isPaused)
@@ -124,6 +143,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             pAni.SetTrigger("JumpAction");
+
+            if (isJumpBoosted)
+            {
+                sfxSource.PlayOneShot(jumpBoostSFX);
+            }
         }
 
 
@@ -219,6 +243,7 @@ public class PlayerController : MonoBehaviour
             if (Strong)
             {
                 bossTraceController.BossStopAnimation();
+                sfxSource.PlayOneShot(stopSFX);
             }
             else if (bossTraceController.isMoving == true)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

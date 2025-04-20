@@ -7,6 +7,10 @@ public class BossController : MonoBehaviour
 {
     public BossTraceController bossTraceController;
 
+    [SerializeField] private AudioSource sfxSource;     // 보스 효과음 재생용 AudioSource
+    [SerializeField] private AudioClip hitSFX;          // 피격 효과음
+    [SerializeField] private AudioClip stopSFX;
+
     public GameObject gameClearUI;
 
     public int Health = 150;
@@ -36,6 +40,7 @@ public class BossController : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 Health -= Damage;
+                sfxSource.PlayOneShot(hitSFX);
 
                 if (isHitAnimation == false)
                 {
@@ -56,7 +61,8 @@ public class BossController : MonoBehaviour
         if (bossTraceController.isMoving == true && collision.CompareTag("StrongBox"))
         {
             bossTraceController.BossStopAnimation();
-            Destroy(collision.gameObject);
+            sfxSource.PlayOneShot(stopSFX);
+            Destroy(collision.gameObject); 
         }
 
     }

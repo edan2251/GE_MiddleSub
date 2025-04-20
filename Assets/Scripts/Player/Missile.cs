@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Missile : MonoBehaviour
 {
+
+    [SerializeField] private AudioClip attackSFX;
+    [SerializeField] private AudioSource sfxSource;
+
     // 미사일 프리팹
     public GameObject missilePrefab;
 
@@ -26,6 +30,7 @@ public class Missile : MonoBehaviour
         // Z 눌렀을때 발사 슛
         if (Input.GetKeyDown(KeyCode.Z) && Time.time >= lastFireTime + fireCooldown)
         {
+            sfxSource.PlayOneShot(attackSFX);
             // 발사 시점 갱신
             lastFireTime = Time.time;
 
