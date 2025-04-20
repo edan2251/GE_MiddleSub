@@ -955,6 +955,7 @@ MonoBehaviour:
   bgmSource: {fileID: 647854022}
   normalBGM: {fileID: 8300000, guid: 90eae78e8ce85a849b5b0ca11b2de641, type: 3}
   invincibleBGM: {fileID: 8300000, guid: a55066ed58874024ca1737df24e01e89, type: 3}
+  speedBoostBGM: {fileID: 0}
 --- !u!4 &912008329
 Transform:
   m_ObjectHideFlags: 0
@@ -4527,6 +4528,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePauseUI: {fileID: 1760383091}
+  sfxSource: {fileID: 0}
+  jumpBoostSFX: {fileID: 0}
+  stopSFX: {fileID: 0}
   bgmController: {fileID: 912008328}
   bossTraceController: {fileID: 0}
   spriteRenderer: {fileID: 0}
