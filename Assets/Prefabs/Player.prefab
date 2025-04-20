@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossTraceController: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  effectDuration: 10
+  effectDuration: 4
   colorChangeSpeed: 0.01
   groundCheck: {fileID: 8016278158590540537}
   groundLayer:
@@ -238,10 +238,10 @@ MonoBehaviour:
   playerJumpHigh: 0
   isInvincible: 0
   moveSpeed: 2.5
-  speedBoostDuration: 7
+  speedBoostDuration: 4
   isSpeedBoosted: 0
   jumpForce: 2.5
-  jumpBoostDuration: 7
+  jumpBoostDuration: 4
   isJumpBoosted: 0
   afterImagePrefab: {fileID: 6176832750359516664, guid: 8fa2f813fc3ea204abe3337fe0f9463c, type: 3}
   maxAfterImages: 5

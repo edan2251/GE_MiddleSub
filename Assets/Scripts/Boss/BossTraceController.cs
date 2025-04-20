@@ -11,7 +11,7 @@ public class BossTraceController : MonoBehaviour
     private Transform player;
     private Animator animator;
 
-    public float moveTime = 3.0f;
+    public float moveTime = 1.5f;
     public float waitTime = 4.0f;
     public bool isMoving = false;
 
@@ -47,7 +47,7 @@ public class BossTraceController : MonoBehaviour
             if (waitTime <= 0)
             {
                 animator.SetTrigger("Boss_Run"); // Run 애니메이션 출력
-                moveTime = 3.0f;
+                moveTime = 1.5f;
                 isMoving = true;
 
             }

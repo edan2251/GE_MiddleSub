@@ -7,7 +7,9 @@ public class BossController : MonoBehaviour
 {
     public BossTraceController bossTraceController;
 
-    public int Health = 100;
+    public GameObject gameClearUI;
+
+    public int Health = 150;
     public int Damage = 10;
 
     private Animator bAni;
@@ -42,6 +44,7 @@ public class BossController : MonoBehaviour
 
                 if (Health <= 0)
                 {
+                    gameClearUI.SetActive(true);
                     Destroy(gameObject);
                 }
             }
@@ -50,7 +53,11 @@ public class BossController : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-
+        if (bossTraceController.isMoving == true && collision.CompareTag("StrongBox"))
+        {
+            bossTraceController.BossStopAnimation();
+            Destroy(collision.gameObject);
+        }
 
     }
     private IEnumerator PlayHitAction()

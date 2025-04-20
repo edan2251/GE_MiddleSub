@@ -6,15 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject gamePauseUI;
+    private bool isPaused = false;
+
     //참조들
     public BossTraceController bossTraceController;
     private Item_StrawBerry_Collected_Effect item_StrawBerry_Collected_Effect;
     private Item_Cherry_Collected_Effect item_Cherry_Collected_Effect;
     private Item_Banana_Collected_Effect item_Banana_Collected_Effect;
+    private Item_Box_Collected item_Box_Collected;
 
     //아이템 지속시간, 색깔 변경시간
     public SpriteRenderer spriteRenderer;
-    public float effectDuration = 7f;
+    public float effectDuration = 6f;
     public float colorChangeSpeed = 0.01f;
 
     //점프
@@ -30,19 +34,19 @@ public class PlayerController : MonoBehaviour
     private Animator pAni;
 
     //아이템 상태
-    private bool Strong = false;
+    public bool Strong = false;
     public bool isInvincible = false; // 무적 상태 플래그
 
     // 이동 속도 관련
     private float baseMoveSpeed = 2.5f;
     public float moveSpeed = 2.5f;
-    public float speedBoostDuration = 7f; // 속도 증가 지속 시간
+    public float speedBoostDuration = 4f; // 속도 증가 지속 시간
     public bool isSpeedBoosted = false; // 속도 증가 여부
 
     // 점프 증가 관련
     private float baseJumpForce = 2.5f;
     public float jumpForce = 2.5f;
-    public float jumpBoostDuration = 7f; // 속도 증가 지속 시간
+    public float jumpBoostDuration = 4f; // 속도 증가 지속 시간
     public bool isJumpBoosted = false; // 속도 증가 여부
 
     //잔상관련
@@ -53,6 +57,9 @@ public class PlayerController : MonoBehaviour
 
     private float spawnTimer;
 
+    //아이템 박스
+    public bool isBox = false; //아이템 상자 획득 여부
+
 
     private void Awake()
     {
@@ -62,8 +69,34 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    void PauseGame()
+    {
+        gamePauseUI.SetActive(true);   // UI 보이기
+        Time.timeScale = 0f;           // 게임 정지
+        isPaused = true;
+    }
+
+    void ResumeGame()
+    {
+        gamePauseUI.SetActive(false);  // UI 숨기기
+        Time.timeScale = 1f;           // 게임 재개
+        isPaused = false;
+    }
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
+
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
@@ -108,6 +141,9 @@ public class PlayerController : MonoBehaviour
 
 
     }//.Update
+
+
+    
 
     //잔상 관련
     void SpawnAfterImage()
@@ -184,7 +220,7 @@ public class PlayerController : MonoBehaviour
             {
                 bossTraceController.BossStopAnimation();
             }
-            else
+            else if (bossTraceController.isMoving == true)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -219,6 +255,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Input.GetKeyDown(KeyCode.C) && collision.CompareTag("Item_Box"))
+        {
+            isBox = true; // 상태 변경
+            item_Box_Collected = collision.GetComponent<Item_Box_Collected>();
+            item_Box_Collected.PlayAndDestroy();
+        }
+    }
+
+
 
     //무적 상태 기능
     IEnumerator ActivateStrongEffect()
@@ -231,7 +278,7 @@ public class PlayerController : MonoBehaviour
             Strong = true;
             isInvincible = true;
 
-            float intensity = Mathf.Sin(Time.time * 7f) * 0.5f + 0.5f; // 밝기 변화 추가
+            float intensity = Mathf.Sin(Time.time * 6f) * 0.5f + 0.5f; // 밝기 변화 추가
 
             spriteRenderer.color = new Color(
                 Mathf.Sin(Time.time * 15f) * 0.8f + 0.5f,

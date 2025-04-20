@@ -12,6 +12,8 @@ TagManager:
   - Item_Jump
   - Missile
   - Boss
+  - StrongBox
+  - Item_Box
   layers:
   - Default
   - TransparentFX
