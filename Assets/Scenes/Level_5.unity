@@ -2627,6 +2627,10 @@ PrefabInstance:
       propertyPath: isHitAnimation
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7626856175842192453, guid: bcd52372ce3f1464d85bbb1114f15a61, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 5726117920400100927}
     m_RemovedComponents:
     - {fileID: 9046443931748765622, guid: bcd52372ce3f1464d85bbb1114f15a61, type: 3}
     m_RemovedGameObjects: []
@@ -58970,6 +58974,7 @@ MonoBehaviour:
   spawnInterval: 0.08
   fadeSpeed: 2
   isBox: 0
+  score: 0
 --- !u!33 &5877771300675583382
 MeshFilter:
   m_ObjectHideFlags: 0

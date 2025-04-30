@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class BossController : MonoBehaviour
 {
     public BossTraceController bossTraceController;
+    public PlayerController playerController;
 
     [SerializeField] private AudioSource sfxSource;     // 보스 효과음 재생용 AudioSource
     [SerializeField] private AudioClip hitSFX;          // 피격 효과음
@@ -49,6 +51,7 @@ public class BossController : MonoBehaviour
 
                 if (Health <= 0)
                 {
+                    HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)playerController.score);
                     gameClearUI.SetActive(true);
                     Destroy(gameObject);
                 }

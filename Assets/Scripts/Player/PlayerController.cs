@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
     //아이템 박스
     public bool isBox = false; //아이템 상자 획득 여부
 
+    public float score;
+
 
     private void Awake()
     {
@@ -72,6 +74,8 @@ public class PlayerController : MonoBehaviour
         pAni = GetComponent<Animator>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        score = 1000f;
     }
 
     void PauseGame()
@@ -163,7 +167,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-
+        score -= Time.deltaTime;
     }//.Update
 
 
@@ -235,6 +239,8 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Finish"))
         {
+            HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)score);
+
             collision.GetComponent<LevelObject>().MoveToNextLevel();
         }
 
